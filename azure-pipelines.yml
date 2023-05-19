@@ -20,15 +20,16 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
-  displayName: Weather App NuGetCommand
     restoreSolution: '$(solution)'
+  displayName: Weather App NuGetCommand
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WeatherApp.zip" /p:DeployIisAppPath="Default Web Site"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-  displayName: Waether App Build
+  displayName: Weather App Build
 
 - task: DotNetCoreCLI@2
   displayName: 'Weather App Package Artifacts'
