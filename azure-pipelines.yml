@@ -28,17 +28,12 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
 - task: DotNetCoreCLI@2
   displayName: 'Weather App Package Artifacts'
   inputs:
     command: publish
     publishWebProjects: false
-    projects: 'WeatherApp/WeatherApp.csproj'
+    projects: '$(Build.SourcesDirectory)/WeatherApp/WeatherApp.csproj'
     arguments: '--configuration ($buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
 
