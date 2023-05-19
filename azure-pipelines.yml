@@ -16,28 +16,30 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@1
+  displayName: Weather App Nuget Tools Installation
 
 - task: NuGetCommand@2
   inputs:
+  displayName: Weather App NuGetCommand
     restoreSolution: '$(solution)'
-
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WeatherApp.zip" /p:DeployIisAppPath="Default Web Site"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+  displayName: Waether App Build
 
 - task: DotNetCoreCLI@2
   displayName: 'Weather App Package Artifacts'
   inputs:
     command: publish
     publishWebProjects: false
-    projects: '$(Build.SourcesDirectory)/WeatherApp/WeatherApp/WeatherApp.csproj'
+    projects: 'WeatherApp/WeatherApp.csproj'
     arguments: '--configuration ($buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
 
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: WeatherApp'
+  displayName: 'Publish Artifact WeatherApp'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
