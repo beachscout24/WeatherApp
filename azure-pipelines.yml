@@ -34,10 +34,11 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Weather App Package Artifacts'
   inputs:
+    command: 'pack'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'off'
+- task: DotNetCoreCLI@2
+  displayName: 'Weather App Publish Artifacts'
+  inputs:
     command: 'publish'
     publishWebProjects: true
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact WeatherApp'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
