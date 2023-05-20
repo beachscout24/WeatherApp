@@ -16,36 +16,34 @@ variables:
   csprojConfig: '**/*.csproj'
 
 steps:
-- task: NuGetToolInstaller@1
-  displayName: Weather App Nuget Tools Installation
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
-  displayName: Weather App NuGetCommand
 
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '7.x'
+    version: '7.0.x'
   displayName: Weather App Use 7.x sdk
 
-- task: VSBuild@1
+- task: DotNetCoreCLI@2
+  displayName: Weather App Restore
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: restore
+    projects: '$(csprojConfig)'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    projects: '$(csprojConfig)'
   displayName: Weather App Build
 
 - task: DotNetCoreCLI@2
   displayName: 'Weather App Package Artifacts'
   inputs:
     command: publish
-    publishWebProjects: true
+    publishWebProjects: false
     projects: '$(csprojConfig)'
     arguments: '--configuration $(buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
 
 - task: PublishBuildArtifacts@1
   displayName: 'Weather App Publish Artifacts'
+  inputs:
+    ArtifactName: WeatherApp
