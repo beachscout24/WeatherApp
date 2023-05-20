@@ -15,6 +15,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
 - task: NuGetToolInstaller@1
   displayName: Weather App Nuget Tools Installation
 
@@ -34,11 +35,11 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Weather App Package Artifacts'
   inputs:
-    command: 'pack'
-    packagesToPack: '**/*.csproj'
-    versioningScheme: 'off'
-- task: DotNetCoreCLI@2
-  displayName: 'Weather App Publish Artifacts'
-  inputs:
     command: 'publish'
-    publishWebProjects: true
+    publishWebProjects: false
+    projects: 'WeatherApp/WeatherApp.csproj'
+    arguments: '--configuration ($buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
+    zipAfterPublish: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Weather App Publish Artifacts'
