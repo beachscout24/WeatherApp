@@ -13,6 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  csproj: '**/*.csproj'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -30,13 +31,15 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'pack'
-    packagesToPack: '**/*.csproj'
+    packagesToPack: '$(csproj)'
     versioningScheme: 'off'
   displayName: 'Weather App Package Artifact'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
-    publishWebProjects: true
+    publishWebProjects: false
+    projects: '$(csproj)'
+    arguments: '--configuration ($buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
   displayName: 'Weather App Publish Artifacts'
