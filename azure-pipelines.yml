@@ -25,6 +25,11 @@ steps:
     restoreSolution: '$(solution)'
   displayName: Weather App NuGetCommand
 
+- task: NuGetCommand@2
+  displayName: Weather App NuGet Restore
+  inputs:
+    restoreSolution: '$(solution)'
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
