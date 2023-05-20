@@ -45,11 +45,11 @@ steps:
     nobuild: true
     publishWebProjects: false
     projects: '$(csproj)'
-    arguments: '-o $(Build.ArtifactStagingDirectory)/Output'
+    arguments: '-o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
     modifyOutputPath: true
 
 - task: PublishBuildArtifacts@1
   displayName: 'Weather App Publish Artifacts'
   inputs:
-   PathtoPublish: '$(build.artifactstagingdirectory)' 
+   PathtoPublish: '$(build.ArtifactStagingDirectory)' 
