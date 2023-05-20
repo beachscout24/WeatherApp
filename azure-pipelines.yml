@@ -37,7 +37,7 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
-    projects: '$(solution)'
+    projects: '$(csproj)'
     arguments: '--configuration ($buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
 
