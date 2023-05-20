@@ -48,5 +48,8 @@ steps:
     arguments: '--configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
 
+- download: current
+  patterns: '**/*.zip'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Weather App Publish Artifacts'
