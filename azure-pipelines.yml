@@ -44,12 +44,9 @@ steps:
     command: publish
     nobuild: true
     publishWebProjects: false
-    projects: '$(csproj)'
-    arguments: '-o $(Build.ArtifactStagingDirectory)'
+    projects: 'WeatherApp/WeatherApp.csproj'
+    arguments: '--configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
-    modifyOutputPath: true
 
 - task: PublishBuildArtifacts@1
   displayName: 'Weather App Publish Artifacts'
-  inputs:
-   PathtoPublish: '$(Build.ArtifactStagingDirectory)' 
