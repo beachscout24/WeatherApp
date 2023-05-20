@@ -37,7 +37,7 @@ steps:
   displayName: 'Weather App Package Artifacts'
   inputs:
     command: publish
-    publishWebProjects: false
+    publishWebProjects: true
     projects: '$(csproj)'
     arguments: '--configuration $(buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
