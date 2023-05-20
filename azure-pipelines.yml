@@ -20,18 +20,12 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '7.0.x'
   displayName: Weather App Use 7.x sdk
 
 - task: DotNetCoreCLI@2
-  displayName: Weather App Restore
   inputs:
-    command: restore
-    projects: '$(csprojConfig)'
-
-- task: DotNetCoreCLI@2
-  inputs:
-    projects: '$(csprojConfig)'
+    command: 'build'
+    projects: '$(solution)'
   displayName: Weather App Build
 
 - task: DotNetCoreCLI@2
@@ -39,11 +33,10 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
-    projects: '$(csprojConfig)'
+    projects: '$(solution)'
     arguments: '--configuration $(buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
 
-- task: PublishBuildArtifacts@1
+- publish: 'bin/Release/net6.0/publish/'
   displayName: 'Weather App Publish Artifacts'
-  inputs:
-    ArtifactName: WeatherApp
+  artifact: Publish
