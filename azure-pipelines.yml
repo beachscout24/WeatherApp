@@ -20,7 +20,7 @@ steps:
 
 - task: NuGetCommand@2
   inputs:
-    restoreSolution: '$(solution)'
+    restoreSolution: '**/*.csproj'
   displayName: Weather App NuGetCommand
 
 - task: VSBuild@1
@@ -34,11 +34,8 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'Weather App Package Artifacts'
   inputs:
-    command: publish
-    publishWebProjects: false
-    projects: '$(solution)'
-    arguments: '--configuration ($buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
-    zipAfterPublish: true
+    command: 'publish'
+    publishWebProjects: true
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact WeatherApp'
