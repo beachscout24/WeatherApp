@@ -36,7 +36,7 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
-    projects: 'WeatherApp/WeatherApp.csproj'
+    projects: '$(solution)'
     arguments: '--configuration ($buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
 
