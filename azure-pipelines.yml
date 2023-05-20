@@ -24,6 +24,12 @@ steps:
     restoreSolution: '$(solution)'
   displayName: Weather App NuGetCommand
 
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '7.x'
+  displayName: Weather App Use 7.x sdk
+
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
