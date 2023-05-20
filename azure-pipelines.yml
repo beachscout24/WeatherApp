@@ -33,11 +33,9 @@ steps:
   displayName: Weather App Build
 
 - task: DotNetCoreCLI@2
-  displayName: 'Weather App Package Artifacts'
   inputs:
     command: 'publish'
-    publishWebProjects: false
-    projects: 'WeatherApp/WeatherApp.csproj'
+    publishWebProjects: true
     arguments: '--configuration ($buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
 
