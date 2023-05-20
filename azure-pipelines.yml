@@ -13,7 +13,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  csproj: '**/*.csproj'
+  csprojConfig: '**/*.csproj'
 
 steps:
 - task: NuGetToolInstaller@1
@@ -36,8 +36,8 @@ steps:
   displayName: 'Weather App Package Artifacts'
   inputs:
     command: publish
-    publishWebProjects: false
-    projects: '$(csproj)'
+    publishWebProjects: true
+    projects: '$(csprojConfig)'
     arguments: '--configuration $(buildConfiguration) --property:PublishDir=$(build.artifactStagingDirectory)'
     zipAfterPublish: true
 
